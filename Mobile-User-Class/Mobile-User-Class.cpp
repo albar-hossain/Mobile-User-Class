@@ -1,5 +1,6 @@
 //TASK 2
 #include <iostream>
+#include<string>
 using namespace std;
 
 class Mobile
@@ -7,57 +8,61 @@ class Mobile
 private:
 	string MobileOwner{ "None" };
 	string MobileNumber{ "Not set" };
-	float Balance{ 50 };
-	string OsName{ "Linux" };
+	float Balance{ 0 };
+	string OsName{ "Not Set" };
 	bool LockStatus{ false };
 public:
+	//setter-getter methods to take user input
 	void setMobileOwner() {
 		string name;
-		cout << "Enter Owner Name :";
-		cin >> name;
+		cout << "Enter Owner Name : ";
+		getline(cin, name);
 		MobileOwner = name;
-		cout << "Mobile Owner is set to " << MobileOwner << " using setter method." << endl;
+		cout << "Mobile Owner is set to " << MobileOwner << endl << endl;
 	}
 	string getMobileNumber() {
-		cout << "Enter Mobile Number :";
+		cout << "Enter Mobile Number : ";
 		cin >> MobileNumber;
+		cout << "Mobile Number set to " << MobileNumber << endl << endl;
 		return MobileNumber;
-		cout << "Mobile Number set to " << MobileNumber << " using getter method." << endl;
 	}
 	float getBalance() {
-		cout << "Enter Amount To Add To Balance :";
-		cin >> Balance;
+		float add_balance{};
+		cout << "Enter Amount To Add To Balance : ";
+		cin >> add_balance;
+		Balance += add_balance;
+		cout << "Account Balance added BDT " << Balance << endl << endl;
 		return Balance;
-		cout << "Account Balance set to " << Balance << " using getter method." << endl;
 	}
-	string setOsName() {
+	void setOsName() {
 		string type;
-		cout << "Enter OS Type :";
+		cout << "Enter OS Type : ";
 		cin >> type;
 		OsName = type;
-		return OsName;
-		cout << "OS is set to " << OsName << " using setter method." << endl;
+		cout << "OS is set to " << OsName << endl << endl;
 	}
 	bool GetLockStatus() {
 		char lock{};
-		cout << "Is your phone locked? Enter 'Y' or 'N' :";
+		cout << "Is your phone locked? Enter 'Y' or 'N' : ";
 		cin >> lock;
 		if (lock == 'Y' || lock == 'y')
 		{
 			LockStatus = true;
-			cout << "Phone is now locked." << endl;
+			cout << "\nPhone is now locked." << endl;
 			return LockStatus;
 		}
 		else if (lock == 'N' || lock == 'n')
 		{
 			LockStatus = false;
-			cout << "Phone is now unlocked." << endl;
+			cout << "\nPhone is now unlocked." << endl;
 			return LockStatus;
 		}
 		else {
-			cout << "Invalid selection lock status will be set to false." << endl;
+			cout << "\nInvalid selection lock status will be set to false." << endl;
 		}
 	}
+
+	//constructors
 	Mobile() {
 		cout << "Empty Constructor" << endl;
 	}
@@ -71,6 +76,7 @@ public:
 		cout << "Parameterized Constructor" << endl;
 	}
 
+	//methods
 	float Recharge(int amount) {
 		cout << "Recharge successful. Your previous balance was " << Balance << " Taka." << endl;
 		Balance += amount;
@@ -79,13 +85,17 @@ public:
 	}
 
 	float CallSomeone(int timeDuration) {
-		if (LockStatus == false)
+		if (LockStatus == false && Balance >= (timeDuration * 0.5))
 		{
 			float cost{};
 			cost = timeDuration * 0.5;
 			Balance -= cost;
 			cout << "\nYour call duration was " << timeDuration << " minutes. Your current balance is " << Balance << "\n" << endl;
 			return Balance;
+		}
+		else if (LockStatus == false && Balance < (timeDuration * 0.5))
+		{
+			cout << "\nYou can't make calls. Your balance is too low.\n" << endl;
 		}
 		else
 		{
@@ -101,6 +111,7 @@ public:
 		cout << "Lock Status                 : " << boolalpha << LockStatus << endl;
 	}
 
+	//destructor
 	~Mobile() {
 		cout << "Destructor called for " << MobileOwner << endl;
 	}
@@ -111,7 +122,7 @@ int main()
 	Mobile b1;
 	b1.ShowInfo();
 	b1.CallSomeone(2);
-	Mobile b2("SUS", "0112343345", 100, "Android", true);
+	Mobile b2("Albar Hossain", "+8801971561819", 100, "Android", true);
 	b2.ShowInfo();
 	b2.CallSomeone(4);
 	Mobile b3;
@@ -120,7 +131,7 @@ int main()
 	b3.getBalance();
 	b3.setOsName();
 	b3.GetLockStatus();
-	b3.CallSomeone(2);
+	b3.CallSomeone(4);
 	b3.ShowInfo();
 	return 0;
 }
