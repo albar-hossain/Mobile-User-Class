@@ -104,6 +104,7 @@ public:
 	}
 
 	void ShowInfo() {
+		cout << "Showing User info for " << MobileOwner << "..." << endl;
 		cout << "Mobile Owner Name           : " << MobileOwner << endl;
 		cout << "Mobile Number // SIM number : " << MobileNumber << endl;
 		cout << "Mobile Balance              : " << Balance << endl;
@@ -113,7 +114,7 @@ public:
 
 	//destructor
 	~Mobile() {
-		cout << "Destructor called for " << MobileOwner << endl;
+		cout << "\nDestructor called for " << MobileOwner << endl;
 	}
 };
 
