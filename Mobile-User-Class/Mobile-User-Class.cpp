@@ -6,9 +6,9 @@ using namespace std;
 class Mobile
 {
 private:
-	string MobileOwner{ "None" };
+	std::string MobileOwner{ "None" };
 	string MobileNumber{ "Not set" };
-	int Balance{ 0 };
+	float Balance{ 0 };
 	string OsName{ "Not Set" };
 	bool LockStatus{ false };
 public:
@@ -26,8 +26,8 @@ public:
 		cout << "Mobile Number set to " << MobileNumber << endl << endl;
 		return MobileNumber;
 	}
-	int getBalance() {
-		int add_balance{};
+	float getBalance() {
+		float add_balance{};
 		cout << "Enter Amount To Add To Balance : ";
 		cin >> add_balance;
 		Balance += add_balance;
@@ -48,13 +48,13 @@ public:
 		if (lock == 'Y' || lock == 'y')
 		{
 			LockStatus = true;
-			cout << "\nPhone is now locked." << endl;
+			cout << "Phone is now locked." << endl;
 			return LockStatus;
 		}
 		else if (lock == 'N' || lock == 'n')
 		{
 			LockStatus = false;
-			cout << "\nPhone is now unlocked." << endl;
+			cout << "Phone is now unlocked." << endl;
 			return LockStatus;
 		}
 		else {
@@ -68,7 +68,7 @@ public:
 		cout << "Empty Constructor" << endl;
 	}
 
-	Mobile(string o, string n, int b, string os, bool ls) {
+	Mobile(string o, string n, float b, string os, bool ls) {
 		MobileOwner = o;
 		MobileNumber = n;
 		Balance = b;
@@ -78,18 +78,18 @@ public:
 	}
 
 	//methods
-	int Recharge(int amount) {
+	float Recharge(int amount) {
 		cout << "Recharge successful. Your previous balance was " << Balance << " Taka." << endl;
 		Balance += amount;
 		cout << " Current balance is BDT " << Balance << "\n" << endl;
 		return Balance;
 	}
 
-	int CallSomeone(int timeDuration) {
+	float CallSomeone(int timeDuration) {
 		if (LockStatus == false && Balance >= (timeDuration * 0.5))
 		{
-			int cost{};
-			cost = (timeDuration * 0.5);
+			float cost{};
+			cost = float(timeDuration * 0.5);
 			Balance -= cost;
 			cout << "\n" << MobileOwner << ", Your call duration was " << timeDuration << " minutes. Your current balance is " << Balance << "\n" << endl;
 			return Balance;
