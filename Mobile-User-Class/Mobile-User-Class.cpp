@@ -8,7 +8,7 @@ class Mobile
 private:
 	string MobileOwner{ "None" };
 	string MobileNumber{ "Not set" };
-	float Balance{ 0 };
+	int Balance{ 0 };
 	string OsName{ "Not Set" };
 	bool LockStatus{ false };
 public:
@@ -26,8 +26,8 @@ public:
 		cout << "Mobile Number set to " << MobileNumber << endl << endl;
 		return MobileNumber;
 	}
-	float getBalance() {
-		float add_balance{};
+	int getBalance() {
+		int add_balance{};
 		cout << "Enter Amount To Add To Balance : ";
 		cin >> add_balance;
 		Balance += add_balance;
@@ -59,6 +59,7 @@ public:
 		}
 		else {
 			cout << "\nInvalid selection lock status will be set to false." << endl;
+			return false;
 		}
 	}
 
@@ -67,7 +68,7 @@ public:
 		cout << "Empty Constructor" << endl;
 	}
 
-	Mobile(string o, string n, float b, string os, bool ls) {
+	Mobile(string o, string n, int b, string os, bool ls) {
 		MobileOwner = o;
 		MobileNumber = n;
 		Balance = b;
@@ -77,34 +78,36 @@ public:
 	}
 
 	//methods
-	float Recharge(int amount) {
+	int Recharge(int amount) {
 		cout << "Recharge successful. Your previous balance was " << Balance << " Taka." << endl;
 		Balance += amount;
 		cout << " Current balance is BDT " << Balance << "\n" << endl;
 		return Balance;
 	}
 
-	float CallSomeone(int timeDuration) {
+	int CallSomeone(int timeDuration) {
 		if (LockStatus == false && Balance >= (timeDuration * 0.5))
 		{
-			float cost{};
-			cost = timeDuration * 0.5;
+			int cost{};
+			cost = (timeDuration * 0.5);
 			Balance -= cost;
-			cout << "\nYour call duration was " << timeDuration << " minutes. Your current balance is " << Balance << "\n" << endl;
+			cout << "\n" << MobileOwner << ", Your call duration was " << timeDuration << " minutes. Your current balance is " << Balance << "\n" << endl;
 			return Balance;
 		}
 		else if (LockStatus == false && Balance < (timeDuration * 0.5))
 		{
-			cout << "\nYou can't make calls. Your balance is too low.\n" << endl;
+			cout << "\nSorry, " << MobileOwner << ", You can't make calls. Your balance is too low.\n" << endl;
+			return 0;
 		}
 		else
 		{
-			cout << "\nYou can't make calls. The phone is locked.\n" << endl;
+			cout << "\nSorry, " << MobileOwner << ", You can't make calls. Your phone is locked.\n" << endl;
+			return 0;
 		}
 	}
 
 	void ShowInfo() {
-		cout << "Showing User info for " << MobileOwner << "..." << endl;
+		cout << "\nShowing User Info for " << MobileOwner << "..." << endl;
 		cout << "Mobile Owner Name           : " << MobileOwner << endl;
 		cout << "Mobile Number // SIM number : " << MobileNumber << endl;
 		cout << "Mobile Balance              : " << Balance << endl;
@@ -123,15 +126,19 @@ int main()
 	Mobile b1;
 	b1.ShowInfo();
 	b1.CallSomeone(2);
+
 	Mobile b2("Albar Hossain", "+8801971561819", 100, "Android", true);
 	b2.ShowInfo();
 	b2.CallSomeone(4);
+
 	Mobile b3;
 	b3.setMobileOwner();
 	b3.getMobileNumber();
 	b3.getBalance();
 	b3.setOsName();
 	b3.GetLockStatus();
+	b3.ShowInfo();
+
 	b3.CallSomeone(4);
 	b3.ShowInfo();
 	return 0;
